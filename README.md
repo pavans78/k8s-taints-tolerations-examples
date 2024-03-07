@@ -27,7 +27,7 @@ And there are three possible values for the effect:
 
 `NoExecute`: 	The Pod is evicted from the node if it is already running on the node, and is not scheduled onto the node if it is not yet running on the node.
 
-##Tolerations:
+## Tolerations:
 
 Tolerations are applied to pods and indicate that the pod can be scheduled on nodes with specific taints. A pod with toleration will only be scheduled on nodes that have a matching taint. By setting tolerations, you can make sure that certain pods are placed on nodes with specific attributes or restrictions, even if those nodes are tainted.
 
@@ -41,25 +41,27 @@ To tolerate a taint, you can specify toleration in the pod specification. For ex
     tolerationSeconds: 3600
 ```
 
-##Taints Effects:
-###NoExecute
+## Taints Effects:
+### NoExecute
 
 This affects pods that are already running on the node as follows:
 Pods that do not tolerate the taint are evicted immediately
 Pods that tolerate the taint without specifying tolerationSeconds in their toleration specification remain bound forever
 Pods that tolerate the taint with a specified tolerationSeconds remain bound for the specified amount of time. After that time elapses, the node lifecycle controller evicts the Pods from the node.
 
-###NoSchedule
+### NoSchedule
 
 No new Pods will be scheduled on the tainted node unless they have a matching toleration. Pods currently running on the node are not evicted.
 
-###PreferNoSchedule
+### PreferNoSchedule
 
 PreferNoSchedule is a "preference" or "soft" version of NoSchedule. The control plane will try to avoid placing a Pod that does not tolerate the taint on the node, but it is not guaranteed.
 
-##Remove Taint
+## Remove Taint
+
 To remove the taint added by the command above, you can run:
 
 `kubectl taint nodes node1 gpu=true:NoSchedule-`
 
 For more information on the node affinity please refer this [link](https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/)
+
