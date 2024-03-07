@@ -1,0 +1,18 @@
+# In this example, the pod has a toleration for the "gpu=true" taint with "NoSchedule" effect. 
+# This means the pod can be scheduled on nodes with the taint "gpu=true:NoSchedule". 
+# Pods that do not tolerate this taint are not scheduled on the node; 
+# existing Pods are not evicted from the node.
+
+apiVersion: v1
+kind: Pod
+metadata: 
+  name: toleration
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+  tolerations:
+  - key: "gpu"
+    operator: "Equal"
+    value: "true"
+    effect: "NoSchedule"

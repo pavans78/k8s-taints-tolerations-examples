@@ -25,7 +25,7 @@ And there are three possible values for the effect:
 
 `PreferNoSchedule`: Similar to NoSchedule, but the scheduler tries to avoid placing new pods on the tainted node unless necessary. 
 
-`NoExecute`: 	The Pod is evicted from the node if it is already running on the node, and is not scheduled onto the node if it is not yet running on the node.
+`NoExecute`: 	Pods that do not tolerate this taint are not scheduled on the node; existing Pods are evicted from the node. The Pod is evicted from the node if it is already running on the node, and is not scheduled onto the node if it is not yet running on the node.
 
 ## Tolerations:
 
@@ -40,6 +40,7 @@ To tolerate a taint, you can specify toleration in the pod specification. For ex
     effect: "NoExecute"
     tolerationSeconds: 3600
 ```
+A toleration with NoExecute effect can specify an optional `tolerationSeconds`` field that dictates how long the pod will stay bound to the node after the taint is added. 
 
 ## Taints Effects:
 ### NoExecute

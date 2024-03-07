@@ -1,3 +1,10 @@
+# PreferNoSchedule is a "preference" or "soft" version of NoSchedule. The control plane will
+# try to avoid placing a Pod that does not tolerate the taint on the node, but it is not guaranteed.
+# In this example, the pod has a toleration for the "gpu" taint with "PreferNoSchedule" effect. 
+# This means the pod can be scheduled on nodes with the taint "gpu=true:PreferNoSchedule," 
+# sometimes even if conditon fails it will schedules into the nodes with the taint "gpu=true:PreferNoSchedule.
+
+
 apiVersion: v1
 kind: Pod
 metadata: 
@@ -7,7 +14,7 @@ spec:
   - name: nginx
     image: nginx
   tolerations:
-  - key: "env"
+  - key: "gpu"
     operator: "Equal"
-    value: "prod"
+    value: "true"
     effect: "PreferNoSchedule"

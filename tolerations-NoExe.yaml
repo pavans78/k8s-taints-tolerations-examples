@@ -1,0 +1,23 @@
+# In this example, the pod has a toleration for the "gpu=true" taint with "NoExecute" effect. 
+# This means the pod can be scheduled on nodes with the taint "gpu=true:NoExecute". 
+# The Pods which are existing in this nodes with the taint "gpu=true:NoExecute" must have a toleration.
+# If the pods which are exiting in this nodes with  doesn't have the taint "gpu=true:NoExecute",
+# it will evict those pods.
+# if this pod is running and a matching taint is added to the node, then the pod will stay bound 
+# to the node for 3600 seconds, and then be evicted. If the taint is removed before that time,
+# the pod will not be evicted.
+
+apiVersion: v1
+kind: Pod
+metadata: 
+  name: toleration
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+  tolerations:
+  - key: "gpu"
+    operator: "Equal"
+    value: "true"
+    effect: "NoExecute"
+    tolerationSeconds: 60
