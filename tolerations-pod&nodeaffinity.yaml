@@ -1,0 +1,37 @@
+# The pod can be scheduled on nodes with the taint "gpu=true:NoSchedule" and as long as there is at least
+# one Pod within Zone us-central1-c already labeled with env=dev and the node must have a label with 
+# the key topology.kubernetes.io/zone and the value of that label must be us-central1-c.
+
+# conditon: (gpu=true:NoSchedule) AND (env=dev --> zone 'us-central1-c' [must satify]) AND (topology.kubernetes.io/zone=us-central1-c )
+
+apiVersion: v1
+kind: Pod
+metadata: 
+  name: toleration-pa
+spec:
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: topology.kubernetes.io/zone
+            operator: In
+            values:
+            - us-central1-c
+    podAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchExpressions:
+          - key: env
+            operator: In
+            values:
+            - dev
+        topologyKey: topology.kubernetes.io/zone=us-central1-c
+  tolerations:
+  - key: "gpu"
+    operator: "Equal"
+    value: "true"
+    effect: "NoSchedule"
+  containers:
+  - name: nginx
+    image: nginx

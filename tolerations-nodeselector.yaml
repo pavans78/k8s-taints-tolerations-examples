@@ -1,0 +1,18 @@
+# In this example, the pod has a toleration for the "gpu=true" taint with "NoSchedule" effect and 
+# node must have a label env=dev then the pod will schedules. 
+
+apiVersion: v1
+kind: Pod
+metadata: 
+  name: toleration
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+  tolerations:
+  - key: "gpu"
+    operator: "Equal"
+    value: "true"
+    effect: "NoSchedule"
+  nodeSelector:
+    env: dev
