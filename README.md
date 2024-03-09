@@ -7,7 +7,7 @@ Taints are applied to nodes in a Kubernetes cluster to repel pods from being sch
 
 To taint a node, use the kubectl taint command. For example, to taint a node with key "gpu" and value "true", use the following command:
 
-`kubectl taint nodes node1 gpu=true:NoSchedule`
+``kubectl taint nodes node1 gpu=true:NoSchedule``
 
 Each taint consists of three parts:
 
